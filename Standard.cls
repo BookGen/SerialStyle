@@ -1,9 +1,11 @@
+% This style requires Cardo and Old Standard TT.
+
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{Serif}
+\ProvidesClass{style}
 
 %%  Class loading and defaults:  %%
 
-\LoadClass[ebook, 12pt, openany, twoside, extrafontsizes, showtrims]{memoir}
+\LoadClass[ebook, 14pt, openany, twoside, extrafontsizes, showtrims]{memoir}
 
 \RequireXeTeX
 
@@ -11,26 +13,24 @@
 
 \RequirePackage{fontspec, polyglossia}
 \setmainlanguage[variant=uk,ordinalmonthday=false]{english}
-\setmainfont{Cardo}
+\setmainfont{Old Standard TT}
 \newfontfamily{\ostt}{Old Standard TT}
 \newcommand{\subs}[1]{\raisebox{-.35ex}{\scriptsize #1}}
 \newcommand{\supers}[1]{\raisebox{.7ex}{\scriptsize #1}}
 
 \RequirePackage{metalogo}
 
-\RequirePackage{soul} % Used in title
-
 \RequirePackage{newunicodechar}
-\newunicodechar{⸺}{\textemdash\textemdash} % This is a safe substitution in Cardo
+\newunicodechar{⸺}{\makebox[2em][s]{\textemdash\hss\textemdash\hss\textemdash}} % Old Standard TT requires adjustment to remove space
 \newunicodechar{⁓}{\scalebox{1.7}[1.35]{\textasciitilde}} % Not in Cardo
 
 %%  Page geometry:  %%
 
-\settypeblocksize{486.9pt}{295pt}{*} % This gives 28 lines per page which is my preferred text height
-\setlrmargins{*}{*}{1} % Equal horizontal margins
+\settypeblocksize{486.9pt}{*}{*} % This gives 28 lines per page which is my preferred text height
+\setlrmarginsandblock{.75in}{.75in}{*}
 \setulmargins{*}{*}{1} % Equal vertical margins
-\setheadfoot{\baselineskip}{24pt}
-\setheaderspaces{*}{12pt}{*}
+\setheadfoot{\baselineskip}{28pt}
+\setheaderspaces{*}{14pt}{*}
 % \setstocksize{11in}{8.5in} % This sets the page up on letter stock
 % \setpagecc{\paperheight}{\paperwidth}{*}  %  This centres the page on the stock
 % \trimFrame
@@ -38,8 +38,8 @@
 \checkandfixthelayout[nearest]
 \newlength{\smallheight}
 \newlength{\smallwidth}
-\setlength{\smallheight}{387.5pt}  %  This height creates a faux-centered (actually about a quarter-inch closer to the top) small page.
-\setlength{\smallwidth}{274pt}  %  This mimics the 1/sqrt(2) ratio of the page
+\setlength{\smallheight}{468.9pt} % Half an inch shorter
+\setlength{\smallwidth}{263.75pt} % This gives a 9:16 ratio with the small height
 
 %%  Empty last page:  %%
 
@@ -55,7 +55,7 @@
 \RequirePackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \RequirePackage[pages=some]{background}
 \newcommand{\textmark}{\backgroundsetup{
-    contents={\ostt\HUGE\bfseries\framebox{\titleinfo}},
+    contents={\ostt\Huge\bfseries\framebox{\MakeUppercase{\titleinfo}}},
     color={black},
     angle={24},
     opacity={1},
@@ -84,7 +84,7 @@
 \setlength{\footmarksep}{-1.7em}
 \setlength{\footparindent}{1.7em}
 \setlength{\footnotesep}{\onelineskip}
-\setfootins{20pt plus 12pt minus 8pt}{16pt}
+\setfootins{24pt plus 14pt minus 9pt}{19pt}
 \feetbelowfloat
 \renewcommand{\@makefntext}[1]{\makefootmark #1}
 \renewcommand{\foottextfont}{\scriptsize}
@@ -92,7 +92,6 @@
 %%  Chapter formatting:  %%
 
 \makechapterstyle{ANDY}{
-	\renewcommand{\chapterheadstart}{\vspace*{\beforechapskip}\hspace{1.5em}}
 	\renewcommand*{\printchaptername}{}
 	\renewcommand*{\chapternamenum}{}
 	\renewcommand*{\afterchapternum}{\enspace}
@@ -124,8 +123,41 @@
 
 %%  Breaks:  %%
 
-\setlength{\pfbreakskip}{32pt}
+\setlength{\pfbreakskip}{37pt}
 \renewcommand*{\pfbreakdisplay}{\bigskip·\quad ·\quad ·\quad ·\quad ·\bigskip}
+
+%%  The title:  %%
+
+\RequirePackage{graphicx}
+\renewcommand{\maketitle}{
+	\pagestyle{empty}
+	{\large\descriptioninfo}
+	\cleartorecto
+	\begin{center}
+		\begin{minipage}[t]{\smallwidth}
+			\parindent=0pt\centering\bfseries\ostt
+			{\large~\seriesinfo~} % Spaces ensure this line is printed even if blank
+			\par\bigskip
+			\par\Huge\MakeUppercase{\titleinfo}
+		\end{minipage}
+	\end{center}
+	\clearpage\null\cleartorecto
+	\begin{center}
+		\begin{minipage}[t][\smallheight][t]{\smallwidth}
+			\parindent=0pt\centering\ostt
+			\vfill
+			{\large~\seriesinfo~}
+			\par\bigskip\HUGE\bfseries\framebox{\MakeUppercase{\titleinfo}}
+			\par\vfill
+			\par{\huge \authorinfo}
+			\par\vfill
+			\par\vfill
+			\par\vfill
+			\par{\Large ⁖~\publisherinfo~\reflectbox{⁖}}
+		\end{minipage}
+	\end{center}
+	\clearpage
+}
 
 %%  The copyright:  %%
 
@@ -160,12 +192,14 @@
 
 \RequirePackage{fmtcount}
 \renewcommand{\thechapter}{\padzeroes[2]{\decimal{chapter}}}
+\newcommand*{\nonmaintitle}{SANDY}
+\newcommand{\beforefulltext}{\renewcommand*{\nonmaintitle}{ANDY}}
 \setsecnumdepth{chapter}
 \pagenumbering{arabic}
 \openany
 \pagestyle{simple}
-\chapterstyle{ANDY}
-\newcommand{\atendtext}{\par\vfill\centering\pagebreak[1]\null\vfill\parbox[b]{\textwidth}{\tiny \detailsinfo\nolinebreak\qquad \copyrightinfo Text design by the KIBI Gô. This work was formatted via \XeLaTeX{}, and this draft was compiled \today{} at \printtime{}.\nolinebreak\qquad Body text has been set in 12pt Cardo. Headings have been set in Old Standard TT.\nolinebreak\qquad This has been the \ordinalstring{chapter} chapter of \seriesinfo{} – \titleinfo{}. Thank you for reading.\lastlinerulefill}}
+\chapterstyle{SANDY}
+\newcommand{\atendtext}{\par\vfill\centering\pagebreak[1]\null\vfill\parbox[b]{\smallwidth}{\tiny\leavevmode\detailsinfo\nolinebreak\qquad\copyrightinfo{} Text design by the KIBI Gô. This work was formatted via \XeLaTeX{}, and this draft was compiled \today{} at \printtime{}.\nolinebreak\qquad Body text has been set in 14pt Old Standard TT.\nolinebreak\qquad This has been the \ordinalstring{chapter} chapter of \seriesinfo{} – \titleinfo{}. Thank you for reading.\lastlinerulefill}}
 \tolerance=5000
 
 %%  Matter handling:  %%
@@ -176,11 +210,10 @@
     \openright
     \pagenumbering{roman}
     \pagestyle{simple}
-    \chapterstyle{ANDY}
+    \chapterstyle{\nonmaintitle}
     \makeevenhead{chapter}{}{}{}
     \makeoddhead{chapter}{}{}{}
     \renewcommand{\atendtext}{}
-    \renewcommand{\mainchapterstyle}{7c}
 }
 \renewcommand{\mainmatter}{
     \cleardoublepage
@@ -199,7 +232,7 @@
     \setcounter{page}{\value{lastfmpage}}
     \openright
     \addtocontents{toc}{\vspace{12pt}}
-    \chapterstyle{ANDY}
+    \chapterstyle{\nonmaintitle}
     \makeevenhead{chapter}{}{}{}
     \makeoddhead{chapter}{}{}{}
 }

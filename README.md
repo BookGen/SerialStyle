@@ -1,9 +1,9 @@
-# Serial
+# SerialStyle
 
 A collection of styles for use with [BookGen](https://github.com/marrus-sh/BookGen/), especially suited to serialized works.
-Featuring :
+Featuring:
 
-+ Serif, Sans, and Largetype Sans PDF forms
++ Standard Serif and Largetype Sans PDF forms
 + Additional information on chapter­‑only PDFs for ease of distribution
 + Trade (6x9in) page size
 + CSS stylesheet
@@ -14,9 +14,7 @@ PDF styles are designed for use with XeLaTeX (the BookGen default).
 
 ### Fonts (for PDF)
 
-All PDF styles require the [Old Standard TT](https://github.com/akryukov/oldstand/releases) fonts.
-The Serif style additionally requires [Cardo](http://www.scholarsfonts.net/cardofnt.html).
-The Sans styles additionally require [Lato](http://www.latofonts.com/lato-free-fonts/).
+All PDF styles require the [Old Standard TT](https://github.com/akryukov/oldstand/releases) fonts. The Largetype style additionally requires [Lato](http://www.latofonts.com/lato-free-fonts/).
 
 ## Makefile configuration
 

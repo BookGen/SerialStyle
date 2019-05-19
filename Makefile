@@ -1,16 +1,18 @@
 # Creates links from `$srcdir/*.c[ls]s` to `Styles/*.c[ls]s`.
 #
-# Example usage from within another Makefile ( assuming `all` and `clean` are defined elsewhere ) :
+# Example usage from within another Makefile:
 #
-# 	style: ; $(MAKE) -f FellStyle/Makefile
-# 	.PHONY: style
+# 	serialstyle: ; $(MAKE) -f SerialStyle/Makefile
+# 	.PHONY: serialstyle
 
 SHELL = /bin/sh
 srcdir := $(patsubst %/Makefile,%,$(lastword $(MAKEFILE_LIST)))
-fellsrcs := $(wildcard $(srcdir)/*.c[ls]s)
-fellstyles := $(patsubst $(srcdir)/%,Styles/%,$(fellsrcs))
+serialsrcs := $(wildcard $(srcdir)/*.c[ls]s)
+serialstyles := $(patsubst $(srcdir)/%,Styles/%,$(serialsrcs))
 
-fell: $(fellstyles);
-$(fellstyles): Styles/%: $(srcdir)/%; ln -fs "$(realpath $<)" $@
-clobber distclean gone: ; rm -f $(fellstyles)
-.PHONY: fell clobber distclean gone
+serial: $(serialstyles);
+$(serialstyles): Styles/%: $(srcdir)/%
+	[[ -d Styles ]] || mkdir Styles
+	ln -fs "$(realpath $<)" $@
+clobber distclean gone: ; rm -f $(serialstyles)
+.PHONY: serial clobber distclean gone
