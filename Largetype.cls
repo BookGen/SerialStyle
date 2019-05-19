@@ -51,7 +51,7 @@
 
 %%  Stamp marks:  %%
 
-\RequirePackage{xcolor}
+\RequirePackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \RequirePackage[pages=some]{background}
 \newcommand{\textmark}{\backgroundsetup{
     contents={\ostt\HUGE\bfseries\framebox{\titleinfo}},
