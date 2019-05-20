@@ -1,0 +1,161 @@
+/* Sections */
+html {
+	--SerialStyle-Colour-White: #EDEDED;
+	--SerialStyle-Colour-Bright: #E3E3E3;
+	--SerialStyle-Colour-Light: #D8D8D8;
+	--SerialStyle-Colour-Regular: #858585;
+	--SerialStyle-Colour-Medium: #646464;
+	--SerialStyle-Colour-Dark: #434343;
+	--SerialStyle-Colour-Dim: #1B1B1B;
+	--SerialStyle-Colour-Black: #111111;
+	Margin: 0;
+	Padding: 0;
+	Max-Width: 42EM;
+	Color: #1B1B1B;
+	Color: Var(--SerialStyle-Colour-Dim);
+	Background: #E3E3E3;
+	Background: Var(--SerialStyle-Colour-Bright);
+	Font-Family: "Old Standard TT", Didot, "Bodoni 72 Oldstyle", "Bodoni 72", "Bodoni MT", Baskerville, Serif;
+	Line-Height: 1.2;
+	Text-Align: Justify;
+	Hyphens: Auto;
+	Quotes: "« " " »";
+}
+body {
+	Margin: Auto;
+	Padding: 4EM 4EM 6EM;
+	Max-Width: 42EM;
+	Position: Relative;
+}
+header,
+footer {
+	Font-Size: .8EM;
+	Color: #646464;
+	Color: Var(--SerialStyle-Colour-Medium);
+	Text-Align: Right;
+}
+
+/* Blocks */
+blockquote {
+	Margin: 0;
+	Padding: 0;
+	Color: #646464;
+	Color: Var(--SerialStyle-Colour-Medium);
+	Font-Style: Italic;
+}
+blockquote p::BEFORE { Content: "« " }
+blockquote p+p::BEFORE { Content: "» "}
+blockquote p:Last-Of-Type::AFTER { Content: " »" }
+h1 {
+	Color: #646464;
+	Color: Var(--SerialStyle-Colour-Medium);
+	Font-Size: 3EM;
+	Font-Weight: Bold;
+	Text-Align: Center;
+}
+h2 {
+	Font-Size: 1.2EM;
+	Color: #434343;
+	Color: Var(--SerialStyle-Colour-Dark);
+	Text-Transform: Uppercase;
+}
+h3,
+h4,
+h5,
+h6 {
+	Font-Size: 1EM;
+	Color: #111111;
+	Color: Var(--SerialStyle-Colour-Black);
+	Font-Weight: Bold;
+}
+hr {
+	Border-Style: None None Solid;
+	Border-Width: Thin;
+	Height: 0;
+	Color: #434343;
+	Color: Var(--SerialStyle-Colour-Dark);
+	Background: Transparent;
+}
+
+/* Tables */
+table {
+	Width: 100%;
+	Border-Collapse: Collapse;
+}
+td {
+	White-Space: NoWrap;
+	Text-Overflow: Ellipsis;
+	Overflow: Hidden;
+	Border: Thin #858585 Solid;
+	Border-Color: Var(--SerialStyle-Colour-Regular);
+}
+tbody tr:Nth-Child(Even) {
+	Background: #E3E3E3;
+	Background: Var(--SerialStyle-Colour-Bright);
+}
+tbody tr:Nth-Child(Odd) {
+	Background: #D8D8D8;
+	Background: Var(--SerialStyle-Colour-Light);
+}
+
+/* Lists */
+[data--book-gen-type=index] ul { List-Style-Type: None }
+ul,
+[data--book-gen-type=index] li ul { List-Style-Type: Circle }
+li ul,
+[data--book-gen-type=index] li li ul { List-Style-Type: Square }
+li li ul,
+[data--book-gen-type=index] li li li ul {
+	List-Style-Type: Disc;
+	Font-Size: .8EM;
+}
+li li li ul,
+[data--book-gen-type=index] li li li li ul {
+	List-Style-Type: Circle;
+	Font-Size: 1EM;
+}
+li li li li ul,
+[data--book-gen-type=index] li li li li li ul { List-Style-Type: Square }
+[data--book-gen-type=index] ol { List-Style-Type: None }
+ol,
+[data--book-gen-type=index] li ol { List-Style-Type: Decimal-Leading-Zero }
+li ol,
+[data--book-gen-type=index] li li ol { List-Style-Type: Lower-Latin }
+li li ol,
+[data--book-gen-type=index] li li li ol {
+	List-Style-Type: Lower-Roman;
+	Font-Size: .8EM;
+}
+li li li ol,
+[data--book-gen-type=index] li li li li ol {
+	List-Style-Type: Lower-Greek;
+	Font-Size: 1EM;
+}
+li li li li ol,
+[data--book-gen-type=index] li li li li li ol { List-Style-Type: Decimal }
+dt { Font-Weight: Bold }
+
+/* Phrasing */
+a[href] {
+	Box-Decoration-Break: Clone;
+	Margin: -.1EM -.125EM;
+	Padding: .1EM .125EM;
+	Color: #434343;
+	Color: Var(--SerialStyle-Colour-Dark);
+	Background: Transparent;
+	Transition: Color .5S, Background .5S;
+}
+a[href]:Hover {
+	Color: #646464;
+	Color: Var(--SerialStyle-Colour-Medium);
+	Background: #EDEDED;
+	Background: Var(--SerialStyle-Colour-White);
+}
+dfn {
+	Font-Style: Normal;
+	Font-Weight: Bold;
+}
+em {
+	Font-Style: Normal;
+	Text-Decoration: Underline;
+}

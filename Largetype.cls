@@ -192,7 +192,7 @@
 \RequirePackage{fmtcount}
 \renewcommand{\thechapter}{\padzeroes[2]{\decimal{chapter}}}
 \newcommand*{\nonmaintitle}{SANDY}
-\newcommand{\beforefulltext}{\renewcommand*{\nonmaintitle}{ANDY}}
+\newcommand{\beforefulltext}{\renewcommand*{\nonmaintitle}{ANDY}\renewcommand{\atendtext}{}}
 \setsecnumdepth{chapter}
 \pagenumbering{arabic}
 \openany
@@ -212,7 +212,6 @@
     \chapterstyle{\nonmaintitle}
     \makeevenhead{chapter}{}{}{}
     \makeoddhead{chapter}{}{}{}
-    \renewcommand{\atendtext}{}
 }
 \renewcommand{\mainmatter}{
     \cleardoublepage

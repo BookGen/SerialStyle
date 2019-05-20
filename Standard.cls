@@ -24,6 +24,10 @@
 \newunicodechar{⸺}{\makebox[2em][s]{\textemdash\hss\textemdash\hss\textemdash}} % Old Standard TT requires adjustment to remove space
 \newunicodechar{⁓}{\scalebox{1.7}[1.35]{\textasciitilde}} % Not in Cardo
 
+%%  Emphasis:  %%
+\usepackage[normalem]{ulem} % This option for alliance with bookgen.sty
+\ULforem
+
 %%  Page geometry:  %%
 
 \settypeblocksize{486.9pt}{*}{*} % This gives 28 lines per page which is my preferred text height
@@ -193,7 +197,7 @@
 \RequirePackage{fmtcount}
 \renewcommand{\thechapter}{\padzeroes[2]{\decimal{chapter}}}
 \newcommand*{\nonmaintitle}{SANDY}
-\newcommand{\beforefulltext}{\renewcommand*{\nonmaintitle}{ANDY}}
+\newcommand{\beforefulltext}{\renewcommand*{\nonmaintitle}{ANDY}\renewcommand{\atendtext}{}}
 \setsecnumdepth{chapter}
 \pagenumbering{arabic}
 \openany
@@ -206,33 +210,32 @@
 
 \newcounter{lastfmpage}
 \renewcommand{\frontmatter}{
-    \cleardoublepage
-    \openright
-    \pagenumbering{roman}
-    \pagestyle{simple}
-    \chapterstyle{\nonmaintitle}
-    \makeevenhead{chapter}{}{}{}
-    \makeoddhead{chapter}{}{}{}
-    \renewcommand{\atendtext}{}
+	\cleardoublepage
+	\openright
+	\pagenumbering{roman}
+	\pagestyle{simple}
+	\chapterstyle{\nonmaintitle}
+	\makeevenhead{chapter}{}{}{}
+	\makeoddhead{chapter}{}{}{}
 }
 \renewcommand{\mainmatter}{
-    \cleardoublepage
-    \setcounter{lastfmpage}{\value{page}}
-    \pagenumbering{arabic}
-    \openany
-    \pagestyle{simple}
-    \setcounter{chapter}{0}
-    \chapterstyle{SANDY}
-    \makeevenhead{chapter}{}{}{}
-    \makeoddhead{chapter}{}{}{}
+	\cleardoublepage
+	\setcounter{lastfmpage}{\value{page}}
+	\pagenumbering{arabic}
+	\openany
+	\pagestyle{simple}
+	\setcounter{chapter}{0}
+	\chapterstyle{SANDY}
+	\makeevenhead{chapter}{}{}{}
+	\makeoddhead{chapter}{}{}{}
 }
 \renewcommand{\backmatter}{
-    \cleardoublepage
-    \pagenumbering{roman}
-    \setcounter{page}{\value{lastfmpage}}
-    \openright
-    \addtocontents{toc}{\vspace{12pt}}
-    \chapterstyle{\nonmaintitle}
-    \makeevenhead{chapter}{}{}{}
-    \makeoddhead{chapter}{}{}{}
+	\cleardoublepage
+	\pagenumbering{roman}
+	\setcounter{page}{\value{lastfmpage}}
+	\openright
+	\addtocontents{toc}{\vspace{12pt}}
+	\chapterstyle{\nonmaintitle}
+	\makeevenhead{chapter}{}{}{}
+	\makeoddhead{chapter}{}{}{}
 }
