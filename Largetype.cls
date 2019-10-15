@@ -9,6 +9,15 @@
 
 \RequireXeTeX
 
+%%  Custom metadata:  %%
+
+\newcommand{\draftinfo}{} % Default to empty
+\newcommand{\publicationdetailsinfo}{}
+
+%%  Checking if empty:  %%
+\RequirePackage{ifmtarg}
+\newcommand{\ifexpandsnotmt}[2]{\expandafter\@ifnotmtarg\expandafter{#1}{#2}}
+
 %%  Font and language setup:  %%
 
 \RequirePackage{fontspec, polyglossia}
@@ -164,16 +173,14 @@
 	\clearpage\null\vfill
 	{
 		\parindent=0pt\tiny
-		\detailsinfo
+		\ifexpandsnotmt{\publicationdetailsinfo}{\publicationdetailsinfo\par\bigskip}
+		\ifexpandsnotmt{\thecopyright}{\thecopyright\par\medskip}
+		This draft compiled \today{} at \printtime.
+		\par\styleinfo{} Edition, \draftinfo{}.
 		\par\bigskip
-		\par\copyrightinfo
+		Book design by KIBI Gô.
 		\par\medskip
-		\par This draft compiled \today{} at \printtime.
-		\par\editioninfo{} Edition, \draftinfo{}.
-		\par\bigskip
-		\par Book design by the KIBI Gô.
-		\par\medskip
-		\par This work is formatted via \XeLaTeX{}.
+		This work is formatted via \XeLaTeX{}.
 		Body text has been set in 12pt Lato.
 		Headings have been set in Old Standard TT.
 		\par\bigskip
@@ -198,7 +205,7 @@
 \openany
 \pagestyle{simple}
 \chapterstyle{SANDY}
-\newcommand{\atendtext}{\par\vfill\centering\pagebreak[1]\null\vfill\parbox[b]{\smallwidth}{\tiny\leavevmode\detailsinfo\nolinebreak\qquad\copyrightinfo{} Text design by the KIBI Gô. This work was formatted via \XeLaTeX{}, and this draft was compiled \today{} at \printtime{}.\nolinebreak\qquad Body text has been set in 17pt Lato. Headings have been set in Old Standard TT.\nolinebreak\qquad This has been the \ordinalstring{chapter} chapter of \seriesinfo{} – \titleinfo{}. Thank you for reading.\lastlinerulefill}}
+\newcommand{\atendtext}{\par\vfill\centering\pagebreak[1]\null\vfill\parbox[b]{\smallwidth}{\tiny\ifexpandsnotmt{\publicationdetailsinfo}{\leavevmode\publicationdetailsinfo\nolinebreak\qquad}\ifexpandsnotmt{\thecopyright}{\thecopyright{} }Text design by KIBI Gô. This work was formatted via \XeLaTeX{}, and this draft was compiled \today{} at \printtime{}.\nolinebreak\qquad Body text has been set in 17pt Lato. Headings have been set in Old Standard TT.\nolinebreak\qquad This has been the \ordinalstring{chapter} chapter of \seriesinfo{} – \titleinfo{}. Thank you for reading.\lastlinerulefill}}
 \tolerance=9999
 
 %%  Matter handling:  %%

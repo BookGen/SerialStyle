@@ -1,3 +1,6 @@
+@namespace "http://www.w3.org/1999/xhtml";
+@namespace EPUB "http://www.idpf.org/2007/ops";
+
 /* Sections */
 html {
 	--SerialStyle-Colour-White: #EDEDED;
@@ -10,20 +13,18 @@ html {
 	--SerialStyle-Colour-Black: #111111;
 	Margin: 0;
 	Padding: 0;
-	Max-Width: 42EM;
 	Color: #1B1B1B;
 	Color: Var(--SerialStyle-Colour-Dim);
 	Background: #E3E3E3;
 	Background: Var(--SerialStyle-Colour-Bright);
-	Font-Family: "Old Standard TT", Didot, "Bodoni 72 Oldstyle", "Bodoni 72", "Bodoni MT", Baskerville, Serif;
-	Line-Height: 1.2;
+	Font: Normal Medium / 1.3 "Old Standard TT", Didot, "Bodoni 72 Oldstyle", "Bodoni 72", "Bodoni MT", Baskerville, Serif;
 	Text-Align: Justify;
 	Hyphens: Auto;
 	Quotes: "« " " »";
 }
 body {
 	Margin: Auto;
-	Padding: 4EM 4EM 6EM;
+	Padding: 3.9EM 4EM 6.5EM;
 	Max-Width: 42EM;
 	Position: Relative;
 }
@@ -47,12 +48,26 @@ blockquote p::BEFORE { Content: "« " }
 blockquote p+p::BEFORE { Content: "» "}
 blockquote p:Last-Of-Type::AFTER { Content: " »" }
 h1 {
+	Position: Relative;
 	Color: #646464;
 	Color: Var(--SerialStyle-Colour-Medium);
 	Font-Size: 3EM;
 	Font-Weight: Bold;
 	Text-Align: Center;
 }
+h1:Not(.unnumbered) { Padding-Left: 0 }
+h1:Not(.unnumbered)::BEFORE {
+	Display: Inline-Block;
+	Margin-Left: -3REM;
+	Min-Width: 3REM;
+	Vertical-Align: Super;
+	Opacity: .8;
+	Font-Size: .4EM;
+	Font-Weight: Normal;
+	Text-Align: Right;
+	Content: Counter(BookGen-Chapter, Decimal-Leading-Zero) ".  ";
+}
+html[data--book-gen-type=appendix] h1:Not(.unnumbered)::BEFORE { Content: Counter(BookGen-Chapter, Upper-Latin) ".  " }
 h2 {
 	Font-Size: 1.2EM;
 	Color: #434343;
@@ -99,40 +114,37 @@ tbody tr:Nth-Child(Odd) {
 }
 
 /* Lists */
-[data--book-gen-type=index] ul { List-Style-Type: None }
-ul,
-[data--book-gen-type=index] li ul { List-Style-Type: Circle }
-li ul,
-[data--book-gen-type=index] li li ul { List-Style-Type: Square }
-li li ul,
-[data--book-gen-type=index] li li li ul {
+ul { List-Style-Type: Circle }
+li ul { List-Style-Type: Square }
+li li ul {
 	List-Style-Type: Disc;
 	Font-Size: .8EM;
 }
-li li li ul,
-[data--book-gen-type=index] li li li li ul {
+li li li ul {
 	List-Style-Type: Circle;
 	Font-Size: 1EM;
 }
-li li li li ul,
-[data--book-gen-type=index] li li li li li ul { List-Style-Type: Square }
-[data--book-gen-type=index] ol { List-Style-Type: None }
+li li li li ul { List-Style-Type: Square }
+[data--book-gen-type=index] nav[EPUB|type] ol {
+	Margin: .52EM 0;
+	List-Style-Type: None;
+}
 ol,
-[data--book-gen-type=index] li ol { List-Style-Type: Decimal-Leading-Zero }
+[data--book-gen-type=index] nav[EPUB|type] li ol { List-Style-Type: Decimal-Leading-Zero }
 li ol,
-[data--book-gen-type=index] li li ol { List-Style-Type: Lower-Latin }
+[data--book-gen-type=index] nav[EPUB|type] li li ol { List-Style-Type: Lower-Latin }
 li li ol,
-[data--book-gen-type=index] li li li ol {
+[data--book-gen-type=index] nav[EPUB|type] li li li ol {
 	List-Style-Type: Lower-Roman;
 	Font-Size: .8EM;
 }
 li li li ol,
-[data--book-gen-type=index] li li li li ol {
+[data--book-gen-type=index] nav[EPUB|type] li li li li ol {
 	List-Style-Type: Lower-Greek;
 	Font-Size: 1EM;
 }
 li li li li ol,
-[data--book-gen-type=index] li li li li li ol { List-Style-Type: Decimal }
+[data--book-gen-type=index] nav[EPUB|type] li li li li li ol { List-Style-Type: Decimal }
 dt { Font-Weight: Bold }
 
 /* Phrasing */
@@ -140,16 +152,24 @@ a[href] {
 	Box-Decoration-Break: Clone;
 	Margin: -.1EM -.125EM;
 	Padding: .1EM .125EM;
-	Color: #434343;
-	Color: Var(--SerialStyle-Colour-Dark);
-	Background: Transparent;
-	Transition: Color .5S, Background .5S;
-}
-a[href]:Hover {
+	Outline: 1PX Transparent Dashed;
+	Outline-Offset: -1PX;
 	Color: #646464;
 	Color: Var(--SerialStyle-Colour-Medium);
-	Background: #EDEDED;
-	Background: Var(--SerialStyle-Colour-White);
+	Font-Weight: Bold;
+	Text-Decoration: Dashed Underline;
+	Transition: Outline-Color .4S, Background-Color .4S;
+}
+nav a[href] { Color: Inherit }
+a[href]:Hover {
+	Outline-Color: #E3E3E3;
+	Outline-Color: Var(--SerialStyle-Colour-Bright);
+	Background-Color: #EDEDED;
+	Background-Color: Var(--SerialStyle-Colour-White);
+}
+cite {
+	Font-Style: Normal;
+	Text-Decoration: Wavy Underline;
 }
 dfn {
 	Font-Style: Normal;
@@ -158,4 +178,13 @@ dfn {
 em {
 	Font-Style: Normal;
 	Text-Decoration: Underline;
+}
+i { Font-Style: Normal }
+i::BEFORE { Content: No-Open-Quote Open-Quote }
+i::AFTER { Content: Close-Quote No-Close-Quote }
+nav[EPUB|type] li>span {
+	Display: Block;
+	Margin-Top: 1.3EM;
+	Border-Bottom: Thin Solid;
+	Font-Weight: Bold;
 }

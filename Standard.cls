@@ -1,4 +1,4 @@
-% This style requires Cardo and Old Standard TT.
+% This style requires Old Standard TT.
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{style}
@@ -8,6 +8,15 @@
 \LoadClass[ebook, 14pt, openany, twoside, extrafontsizes, showtrims]{memoir}
 
 \RequireXeTeX
+
+%%  Custom metadata:  %%
+
+\newcommand{\draftinfo}{} % Default to empty
+\newcommand{\publicationdetailsinfo}{}
+
+%%  Checking if empty:  %%
+\RequirePackage{ifmtarg}
+\newcommand{\ifexpandsnotmt}[2]{\expandafter\@ifnotmtarg\expandafter{#1}{#2}}
 
 %%  Font and language setup:  %%
 
@@ -22,7 +31,6 @@
 
 \RequirePackage{newunicodechar}
 \newunicodechar{⸺}{\makebox[2em][s]{\textemdash\hss\textemdash\hss\textemdash}} % Old Standard TT requires adjustment to remove space
-\newunicodechar{⁓}{\scalebox{1.7}[1.35]{\textasciitilde}} % Not in Cardo
 
 %%  Emphasis:  %%
 \usepackage[normalem]{ulem} % This option for alliance with bookgen.sty
@@ -168,19 +176,16 @@
 \newcommand{\makecopyright}{
 	\vfill
 	{
-		\parindent0pt\tiny
-		\detailsinfo
+		\parindent=0pt\tiny
+		\ifexpandsnotmt{\publicationdetailsinfo}{\publicationdetailsinfo\par\bigskip}
+		\ifexpandsnotmt{\thecopyright}{\thecopyright\par\medskip}
+		This draft compiled \today{} at \printtime.
+		\par\styleinfo{} Edition, \draftinfo{}.
 		\par\bigskip
-		\par\copyrightinfo
+		Book design by KIBI Gô.
 		\par\medskip
-		\par This draft compiled \today{} at \printtime.
-		\par\editioninfo{} Edition, \draftinfo{}.
-		\par\bigskip
-		\par Book design by the KIBI Gô.
-		\par\medskip
-		\par This work is formatted via \XeLaTeX{}.
-		Body text has been set in 12pt Cardo.
-		Headings have been set in Old Standard TT.
+		This work is formatted via \XeLaTeX{}.
+		Body text has been set in 12pt Old Standard TT.
 		\par\bigskip
 		\par\vfill
 	}
@@ -203,7 +208,7 @@
 \openany
 \pagestyle{simple}
 \chapterstyle{SANDY}
-\newcommand{\atendtext}{\par\vfill\centering\pagebreak[1]\null\vfill\parbox[b]{\smallwidth}{\tiny\leavevmode\detailsinfo\nolinebreak\qquad\copyrightinfo{} Text design by the KIBI Gô. This work was formatted via \XeLaTeX{}, and this draft was compiled \today{} at \printtime{}.\nolinebreak\qquad Body text has been set in 14pt Old Standard TT.\nolinebreak\qquad This has been the \ordinalstring{chapter} chapter of \seriesinfo{} – \titleinfo{}. Thank you for reading.\lastlinerulefill}}
+\newcommand{\atendtext}{\par\vfill\centering\pagebreak[1]\null\vfill\parbox[b]{\smallwidth}{\tiny\ifexpandsnotmt{\publicationdetailsinfo}{\leavevmode\publicationdetailsinfo\nolinebreak\qquad}\ifexpandsnotmt{\thecopyright}{\thecopyright{} }Text design by KIBI Gô. This work was formatted via \XeLaTeX{}, and this draft was compiled \today{} at \printtime{}.\nolinebreak\qquad Body text has been set in 14pt Old Standard TT.\nolinebreak\qquad This has been the \ordinalstring{chapter} chapter of \seriesinfo{} – \titleinfo{}. Thank you for reading.\lastlinerulefill}}
 \tolerance=5000
 
 %%  Matter handling:  %%
