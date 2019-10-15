@@ -20,7 +20,27 @@ html {
 	Font: Normal Medium / 1.3 "Old Standard TT", Didot, "Bodoni 72 Oldstyle", "Bodoni 72", "Bodoni MT", Baskerville, Serif;
 	Text-Align: Justify;
 	Hyphens: Auto;
-	Quotes: "« " " »";
+}
+html[data--book-gen-type=index] {
+	Box-Sizing: Border-Box;
+	Padding: 0.975EM 1EM;
+	Height: 100VH;
+	Overflow: Hidden;
+	Background: #646464;
+	Background: Var(--SerialStyle-Colour-Medium);
+	Text-Align: Center;
+}
+@media ( Prefers-Color-Scheme: Dark ) {
+	html {
+		Color: #E3E3E3;
+		Color: Var(--SerialStyle-Colour-Bright);
+		Background: #1B1B1B;
+		Background: Var(--SerialStyle-Colour-Dim);
+	}
+	html[data--book-gen-type=index] {
+		Background: #111111;
+		Background: Var(--SerialStyle-Colour-Black);
+	}
 }
 body {
 	Margin: Auto;
@@ -28,12 +48,58 @@ body {
 	Max-Width: 42EM;
 	Position: Relative;
 }
+html[data--book-gen-type=index] body {
+	Display: Flex;
+	Flex-Direction: Column;
+	Box-Sizing: Border-Box;
+	Border: .625EM #EDEDED Solid;
+	Border-Color: Var(--SerialStyle-Colour-White);
+	Padding: 1.25EM;
+	Max-Width: Min-Content;
+	Height: 100%;
+	Overflow-X: Hidden;
+	Overflow-Y: Auto;
+	Background: #E3E3E3;
+	Background: Var(--SerialStyle-Colour-Bright);
+	Box-Shadow: 0 0 3PX #434343;
+	Box-Shadow: 0 0 3PX Var(--SerialStyle-Colour-Dark);
+	Font-Size: .8EM;
+	Line-Height: 1.25;
+}
+@media ( Prefers-Color-Scheme: Dark ) {
+	html[data--book-gen-type=index] body {
+		Border-Color: #434343;
+		Border-Color: Var(--SerialStyle-Colour-Dark);
+		Background: #1B1B1B;
+		Background: Var(--SerialStyle-Colour-Dim);
+		Box-Shadow: None;
+	}
+}
 header,
 footer {
 	Font-Size: .8EM;
 	Color: #646464;
 	Color: Var(--SerialStyle-Colour-Medium);
 	Text-Align: Right;
+}
+@media ( Prefers-Color-Scheme: Dark ) {
+	header,
+	footer {
+		Color: #858585;
+		Color: Var(--SerialStyle-Colour-Regular);
+	}
+}
+html[data--book-gen-type=index] footer { Text-Align: Center }
+#SerialStyle\.header {
+	Font: Inherit;
+	Color: Inherit;
+	Text-Align: Center;
+}
+#SerialStyle\.footer { Margin-Top: Auto }
+[data--book-gen-type=index] nav[EPUB|type] {
+	Margin-Top: .52EM;
+	Border-Top: Thin Solid;
+	Padding-Top: .78EM;
 }
 
 /* Blocks */
@@ -47,6 +113,13 @@ blockquote {
 blockquote p::BEFORE { Content: "« " }
 blockquote p+p::BEFORE { Content: "» "}
 blockquote p:Last-Of-Type::AFTER { Content: " »" }
+@media ( Prefers-Color-Scheme: Dark ) {
+	blockquote {
+		Color: #858585;
+		Color: Var(--SerialStyle-Colour-Regular);
+	}
+}
+#SerialStyle\.title,
 h1 {
 	Position: Relative;
 	Color: #646464;
@@ -54,6 +127,20 @@ h1 {
 	Font-Size: 3EM;
 	Font-Weight: Bold;
 	Text-Align: Center;
+}
+#SerialStyle\.title {
+	Margin: .35EM 0;
+	Color: #111111;
+	Color: Var(--SerialStyle-Colour-Black);
+}
+html[data--book-gen-type=index] h1 {
+	Position: Absolute;
+	Margin: 0 -1PX -1PX 0;
+	Width: 1PX;
+	Height: 1PX;
+	Color: Transparent;
+	Clip-Path: Inset(50%);
+	Z-Index: -1;
 }
 h1:Not(.unnumbered) { Padding-Left: 0 }
 h1:Not(.unnumbered)::BEFORE {
@@ -68,11 +155,27 @@ h1:Not(.unnumbered)::BEFORE {
 	Content: Counter(BookGen-Chapter, Decimal-Leading-Zero) ".  ";
 }
 html[data--book-gen-type=appendix] h1:Not(.unnumbered)::BEFORE { Content: Counter(BookGen-Chapter, Upper-Latin) ".  " }
+@media ( Prefers-Color-Scheme: Dark ) {
+	#SerialStyle\.title {
+		Color: #EDEDED;
+		Color: Var(--SerialStyle-Colour-White);
+	}
+	h1 {
+		Color: #858585;
+		Color: Var(--SerialStyle-Colour-Regular);
+	}
+}
 h2 {
 	Font-Size: 1.2EM;
 	Color: #434343;
 	Color: Var(--SerialStyle-Colour-Dark);
 	Text-Transform: Uppercase;
+}
+@media ( Prefers-Color-Scheme: Dark ) {
+	h2 {
+		Color: #D8D8D8;
+		Color: Var(--SerialStyle-Colour-Light);
+	}
 }
 h3,
 h4,
@@ -83,6 +186,15 @@ h6 {
 	Color: Var(--SerialStyle-Colour-Black);
 	Font-Weight: Bold;
 }
+@media ( Prefers-Color-Scheme: Dark ) {
+	h3,
+	h4,
+	h5,
+	h6 {
+		Color: #EDEDED;
+		Color: Var(--SerialStyle-Colour-White);
+	}
+}
 hr {
 	Border-Style: None None Solid;
 	Border-Width: Thin;
@@ -91,6 +203,13 @@ hr {
 	Color: Var(--SerialStyle-Colour-Dark);
 	Background: Transparent;
 }
+@media ( Prefers-Color-Scheme: Dark ) {
+	hr {
+		Color: #D8D8D8;
+		Color: Var(--SerialStyle-Colour-Light);
+	}
+}
+#SerialStyle\.header p { Margin: 0 }
 
 /* Tables */
 table {
@@ -104,6 +223,12 @@ td {
 	Border: Thin #858585 Solid;
 	Border-Color: Var(--SerialStyle-Colour-Regular);
 }
+@media ( Prefers-Color-Scheme: Dark ) {
+	td {
+		Border-Color: #646464;
+		Border-Color: Var(--SerialStyle-Colour-Medium);
+	}
+}
 tbody tr:Nth-Child(Even) {
 	Background: #E3E3E3;
 	Background: Var(--SerialStyle-Colour-Bright);
@@ -111,6 +236,16 @@ tbody tr:Nth-Child(Even) {
 tbody tr:Nth-Child(Odd) {
 	Background: #D8D8D8;
 	Background: Var(--SerialStyle-Colour-Light);
+}
+@media ( Prefers-Color-Scheme: Dark ) {
+	tbody tr:Nth-Child(Even) {
+		Background: #1B1B1B;
+		Background: Var(--SerialStyle-Colour-Dim);
+	}
+	tbody tr:Nth-Child(Odd) {
+		Background: #434343;
+		Background: Var(--SerialStyle-Colour-Dark);
+	}
 }
 
 /* Lists */
@@ -127,24 +262,21 @@ li li li ul {
 li li li li ul { List-Style-Type: Square }
 [data--book-gen-type=index] nav[EPUB|type] ol {
 	Margin: .52EM 0;
+	Padding: 0;
 	List-Style-Type: None;
 }
-ol,
-[data--book-gen-type=index] nav[EPUB|type] li ol { List-Style-Type: Decimal-Leading-Zero }
-li ol,
-[data--book-gen-type=index] nav[EPUB|type] li li ol { List-Style-Type: Lower-Latin }
-li li ol,
-[data--book-gen-type=index] nav[EPUB|type] li li li ol {
+ol { List-Style-Type: Decimal-Leading-Zero }
+li ol { List-Style-Type: Lower-Latin }
+li li ol {
 	List-Style-Type: Lower-Roman;
 	Font-Size: .8EM;
 }
-li li li ol,
-[data--book-gen-type=index] nav[EPUB|type] li li li li ol {
+li li li ol {
 	List-Style-Type: Lower-Greek;
 	Font-Size: 1EM;
 }
-li li li li ol,
-[data--book-gen-type=index] nav[EPUB|type] li li li li li ol { List-Style-Type: Decimal }
+li li li li ol { List-Style-Type: Decimal }
+[data--book-gen-type=index] nav[EPUB|type] li { Margin: .26EM 0 0 }
 dt { Font-Weight: Bold }
 
 /* Phrasing */
@@ -161,16 +293,44 @@ a[href] {
 	Transition: Outline-Color .4S, Background-Color .4S;
 }
 nav a[href] { Color: Inherit }
+[data--book-gen-type=index] nav[EPUB|type] a[href] {
+	Display: Block;
+	Margin: 0;
+	Border: Thin Solid;
+	Padding: .3125EM .625EM;
+	Min-Width: Max-Content;
+	Color: Inherit;
+	Font: Inherit;
+}
 a[href]:Hover {
 	Outline-Color: #E3E3E3;
 	Outline-Color: Var(--SerialStyle-Colour-Bright);
 	Background-Color: #EDEDED;
 	Background-Color: Var(--SerialStyle-Colour-White);
 }
+@media ( Prefers-Color-Scheme: Dark ) {
+	a[href] {
+		Color: #858585;
+		Color: Var(--SerialStyle-Colour-Regular);
+	}
+	a[href]:Hover {
+		Outline-Color: #1B1B1B;
+		Outline-Color: Var(--SerialStyle-Colour-Dim);
+		Background-Color: #111111;
+		Background-Color: Var(--SerialStyle-Colour-Black);
+	}
+}
 cite {
 	Font-Style: Normal;
 	Text-Decoration: Wavy Underline;
 }
+#SerialStyle\.title cite {
+	Font-Variant-Caps: Small-Caps;
+	Text-Decoration: None;
+}
+[data--book-gen-type=index] nav[EPUB|type] cite { Text-Decoration: None }
+[data--book-gen-type=index] nav[EPUB|type] cite::BEFORE { Content: Open-Quote }
+[data--book-gen-type=index] nav[EPUB|type] cite::AFTER { Content: Close-Quote }
 dfn {
 	Font-Style: Normal;
 	Font-Weight: Bold;
@@ -182,7 +342,7 @@ em {
 i { Font-Style: Normal }
 i::BEFORE { Content: No-Open-Quote Open-Quote }
 i::AFTER { Content: Close-Quote No-Close-Quote }
-nav[EPUB|type] li>span {
+[data--book-gen-type=index] nav[EPUB|type] li>span {
 	Display: Block;
 	Margin-Top: 1.3EM;
 	Border-Bottom: Thin Solid;
